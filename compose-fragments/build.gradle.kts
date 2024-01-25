@@ -62,7 +62,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.github.LuWe98"
             artifactId = "core"
-            version = "0.0.1"
+            version = "1.0.0"
 
             afterEvaluate {
                 from(components["release"])
