@@ -1,27 +1,22 @@
 package com.welu.composefragments.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
-import com.welu.composefragments.R
-import com.welu.composefragments.extensions.collectOnStarted
-import com.welu.composefragments.extensions.navController
-import com.welu.composefragments.result.FragmentResultCollector
-import com.welu.composefragments.result.IntResult
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
-import kotlinx.coroutines.flow.emptyFlow
 
 class ExampleFragmentOne : ComposeFragment() {
 
@@ -31,6 +26,18 @@ class ExampleFragmentOne : ComposeFragment() {
     override fun Content() {
         var currentValue by remember {
             mutableStateOf<Int>(0)
+        }
+        
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.onError)
+        ) {
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Click me")
+            }
+
+
         }
 
         //val a = R.id.exampleFragmentOne

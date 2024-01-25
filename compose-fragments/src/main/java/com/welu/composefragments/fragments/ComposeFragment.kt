@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.welu.composefragments.extensions.composeActivity
 
 abstract class ComposeFragment: Fragment(), IComposeFragment {
 
@@ -21,9 +20,7 @@ abstract class ComposeFragment: Fragment(), IComposeFragment {
     ) = ComposeView(requireContext()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
-            composeActivity.WithTheme {
-                this@ComposeFragment.Content()
-            }
+            this@ComposeFragment.Content()
         }
     }
 }

@@ -27,15 +27,15 @@ class MainViewModel(
 
     init {
         viewModelScope.launch {
-//            delay(3000)
-//            isInDarkThemeMutableStateFlow.update {
-//                true
-//            }
-//
-//            delay(3000)
-//            areDynamicColorsEnabledMutableStateFlow.update {
-//                true
-//            }
+            delay(3000)
+            isInDarkThemeMutableStateFlow.update {
+                true
+            }
+
+            delay(3000)
+            areDynamicColorsEnabledMutableStateFlow.update {
+                true
+            }
         }
     }
 
