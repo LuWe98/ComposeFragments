@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/exampleFragmentOne">
+    <fragment
+            android:id="@+id/exampleFragmentOne"
+            android:name="com.welu.composefragments.fragments.ExampleFragmentOne"
+            android:label="ExampleFragmentOne" >
+        <action
+                android:id="@+id/to_exampleBottomSheetDialogFragment"
+                app:destination="@id/exampleBottomSheetDialogFragment" />
+    </fragment>
+    <dialog
+            android:id="@+id/exampleBottomSheetDialogFragment"
+            android:name="com.welu.composefragments.fragments.ExampleBottomSheetDialogFragment"
+            android:label="ExampleBottomSheetDialogFragment" >
+        <action
+                android:id="@+id/to_exampleDialogFragment"
+                app:destination="@id/exampleDialogFragment" />
+    </dialog>
+    <dialog
+            android:id="@+id/exampleDialogFragment"
+            android:name="com.welu.composefragments.fragments.ExampleDialogFragment"
+            android:label="ExampleDialogFragment" >
+        <action
+                android:id="@+id/to_exampleFragmentTwo"
+                app:destination="@id/exampleFragmentTwo" />
+    </dialog>
+    <fragment
+            android:id="@+id/exampleFragmentTwo"
+            android:name="com.welu.composefragments.fragments.ExampleFragmentTwo"
+            android:label="ExampleFragmentTwo" />
+</navigation>

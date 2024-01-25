@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ComposeFragments" parent="Theme.ComposeFragments.Dark"/>
+
+    <style name="Theme.ComposeFragments.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">#00000000</item>
+
+        <item name="dialogTheme">@style/Theme.ComposeDialogFragment</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.ComposeBottomSheetFragment</item>
+    </style>
+
+
+    <!-- BottomSheetDialogFragment Theme -->
+    <style name="Theme.ComposeBottomSheetFragment" parent="Theme.ComposeBottomSheetFragment.Dark"/>
+
+    <style name= "Theme.ComposeBottomSheetFragment.Dark"  parent="@style/Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="bottomSheetStyle">@style/Style.ComposeBottomSheetFragment.TransparentBackground</item>
+    </style>
+
+
+
+    <!-- DialogFragment Theme -->
+    <style name="Theme.ComposeDialogFragment" parent="Theme.ComposeDialogFragment.Dark"/>
+
+    <style name="Theme.ComposeDialogFragment.Dark" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:background">@null</item>
+
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+
+        <item name="android:windowAnimationStyle">@style/Style.ComposeDialogFragment.Animation</item>
+    </style>
+
+</resources>

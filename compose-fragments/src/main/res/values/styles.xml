@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ComposeFragments" parent="Theme.ComposeFragments.Light"/>
+
+    <style name="Theme.ComposeFragments.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">#00000000</item>
+
+        <item name="dialogTheme">@style/Theme.ComposeDialogFragment</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.ComposeBottomSheetFragment</item>
+    </style>
+
+
+
+    <!-- BottomSheetDialogFragment Theme -->
+    <style name="Theme.ComposeBottomSheetFragment" parent="Theme.ComposeBottomSheetFragment.Light"/>
+
+    <style name= "Theme.ComposeBottomSheetFragment.Light"  parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="bottomSheetStyle">@style/Style.ComposeBottomSheetFragment.TransparentBackground</item>
+    </style>
+
+    <style name="Style.ComposeBottomSheetFragment.TransparentBackground" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+
+    <!-- DialogFragment Theme -->
+    <style name="Theme.ComposeDialogFragment" parent="Theme.ComposeDialogFragment.Light"/>
+
+    <style name="Theme.ComposeDialogFragment.Light" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:background">@null</item>
+
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+
+        <item name="android:windowAnimationStyle">@style/Style.ComposeDialogFragment.Animation</item>
+    </style>
+
+    <style name="Style.ComposeDialogFragment.Animation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/dialog_fragment_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_fragment_exit</item>
+    </style>
+
+</resources>
