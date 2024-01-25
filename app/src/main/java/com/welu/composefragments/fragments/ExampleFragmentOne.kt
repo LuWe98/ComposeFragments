@@ -33,19 +33,21 @@ class ExampleFragmentOne : ComposeFragment() {
             mutableStateOf<Int>(0)
         }
 
-        FragmentResultCollector<IntResult>(R.id.exampleFragmentOne){
-            currentValue = it.value
-        }
+        //val a = R.id.exampleFragmentOne
 
-        Column {
-            Button(onClick = {
-                navController.navigate(ExampleFragmentOneDirections.toExampleBottomSheetDialogFragment())
-            }) {
-                Text(text = "Go to FragmentTwo")
-            }
-
-            Text(text = "ParsedValue: $currentValue")
-        }
+//        FragmentResultCollector<IntResult>(com.welu.composefragments.R.id.exampleFragmentOne){
+//            currentValue = it.value
+//        }
+//
+//        Column {
+//            Button(onClick = {
+//                navController.navigate(ExampleFragmentOneDirections.toExampleBottomSheetDialogFragment())
+//            }) {
+//                Text(text = "Go to FragmentTwo")
+//            }
+//
+//            Text(text = "ParsedValue: $currentValue")
+//        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

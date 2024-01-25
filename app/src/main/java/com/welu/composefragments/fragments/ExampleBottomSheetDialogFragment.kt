@@ -26,7 +26,7 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
                 .fillMaxWidth()
         ) {
             Button(onClick = {
-                navController.navigate(ExampleBottomSheetDialogFragmentDirections.toExampleDialogFragment())
+                //navController.navigate(ExampleBottomSheetDialogFragmentDirections.toExampleDialogFragment())
             }) {
                 Text(text = "Go to dialog 2")
             }

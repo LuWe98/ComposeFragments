@@ -30,7 +30,7 @@ class ExampleDialogFragment : ComposeDialogFragment() {
                 .background(MaterialTheme.colorScheme.background, RoundedCornerShape(10.dp))
         ) {
             Button(onClick = {
-                navController.navigate(ExampleDialogFragmentDirections.toExampleFragmentTwo())
+                //navController.navigate(ExampleDialogFragmentDirections.toExampleFragmentTwo())
             }) {
                 Text(text = "Navigate to Fragment Two")
             }
@@ -40,7 +40,7 @@ class ExampleDialogFragment : ComposeDialogFragment() {
             Button(onClick = {
                 setFragmentResult(IntResult(2))
 
-                sendFragmentResultTo(IntResult(2), R.id.exampleFragmentOne)
+                //sendFragmentResultTo(IntResult(2), R.id.exampleFragmentOne)
             }) {
                 Text(text = "Send Result")
             }

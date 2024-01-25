@@ -2,9 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("org.jetbrains.kotlin.android")
-
-    id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
+ //id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -53,9 +51,9 @@ android {
     }
 
     //Important for SaveArgs in Kotlin
-    sourceSets {
-        getByName("main").kotlin.srcDirs("build/generated/source/navigation-args")
-    }
+//    sourceSets {
+//        getByName("main").kotlin.srcDirs("build/generated/source/navigation-args")
+//    }
 }
 
 dependencies {
