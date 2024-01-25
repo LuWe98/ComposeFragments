@@ -9,7 +9,7 @@ object Versions {
     const val jvmTarget = "1.8"
 
     const val kotlinVersion = "1.9.10"
-    const val androidLibraryVersion = "8.2.1"
+    const val androidLibraryVersion = "8.2.2"
 
     const val androidxCoreVersion = "1.12.0"
     const val androidxMaterialVersion = "1.11.0"
