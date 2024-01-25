@@ -5,8 +5,8 @@ object Versions {
     const val compileSdk = 34
     const val minSdk = 24
 
-    val javaCompatibility = JavaVersion.VERSION_11
-    const val jvmTarget = "11"
+    val javaCompatibility = JavaVersion.VERSION_1_8
+    const val jvmTarget = "1.8"
 
     const val kotlinVersion = "1.9.10"
     const val androidLibraryVersion = "8.2.1"
