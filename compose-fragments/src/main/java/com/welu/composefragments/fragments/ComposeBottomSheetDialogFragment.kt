@@ -2,6 +2,7 @@ package com.welu.composefragments.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.FloatRange
@@ -28,12 +29,17 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ComposeView(requireContext()).apply {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent {
-            composeActivity.WithTheme {
-                composeActivity.WithBottomSheetDialogFragmentSurface {
-                    this@ComposeBottomSheetDialogFragment.Content()
+    ): View {
+        val composeActivity = this.composeActivity
+
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            setContent {
+                composeActivity.WithTheme {
+                    composeActivity.WithBottomSheetDialogFragmentSurface {
+                        this@ComposeBottomSheetDialogFragment.Content()
+                    }
                 }
             }
         }

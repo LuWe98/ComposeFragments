@@ -2,6 +2,7 @@ package com.welu.composefragments.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -28,31 +29,35 @@ abstract class ComposeDialogFragment : DialogFragment(), IComposeFragment {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ComposeView(requireContext()).apply {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent {
-            composeActivity.WithTheme {
-                composeActivity.WithDialogFragmentSurface {
-                    Box(
-                        modifier = Modifier
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember(::MutableInteractionSource),
-                                onClick = {
-                                    if (isCancellableOnTouchOutside) {
-                                        dismiss()
-                                    }
-                                }
-                            )
-                            .wrapContentSize()
-                    ) {
+    ): View {
+        val composeActivity = this.composeActivity
+
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            setContent {
+                composeActivity.WithTheme {
+                    composeActivity.WithDialogFragmentSurface {
                         Box(
                             modifier = Modifier
-                                .wrapContentSize()
-                                .clickable(enabled = false) {}
-                                .align(Alignment.Center)
+                                .clickable(
+                                    indication = null,
+                                    interactionSource = remember(::MutableInteractionSource),
+                                    onClick = {
+                                        if (isCancellableOnTouchOutside) {
+                                            dismiss()
+                                        }
+                                    }
+                                ).wrapContentSize()
                         ) {
-                            this@ComposeDialogFragment.Content()
+                            Box(
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .clickable(enabled = false) {}
+                                    .align(Alignment.Center)
+                            ) {
+                                this@ComposeDialogFragment.Content()
+                            }
                         }
                     }
                 }
