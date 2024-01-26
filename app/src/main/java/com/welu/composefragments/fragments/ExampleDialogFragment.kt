@@ -44,6 +44,13 @@ class ExampleDialogFragment : ComposeDialogFragment() {
             }) {
                 Text(text = "Send Result")
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(text = "DialogFragment")
+
+            Spacer(modifier = Modifier.height(20.dp))
+
         }
     }
 

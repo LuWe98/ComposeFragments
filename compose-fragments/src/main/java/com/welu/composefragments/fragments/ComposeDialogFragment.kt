@@ -31,27 +31,29 @@ abstract class ComposeDialogFragment : DialogFragment(), IComposeFragment {
     ) = ComposeView(requireContext()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
-            Box(
-                modifier = Modifier
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember(::MutableInteractionSource),
-                        onClick = {
-                            if (isCancellableOnTouchOutside) {
-                                dismiss()
-                            }
+            composeActivity.WithTheme {
+                composeActivity.WithDialogFragmentSurface {
+                    Box(
+                        modifier = Modifier
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember(::MutableInteractionSource),
+                                onClick = {
+                                    if (isCancellableOnTouchOutside) {
+                                        dismiss()
+                                    }
+                                }
+                            )
+                            .wrapContentSize()
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .clickable(enabled = false) {}
+                                .align(Alignment.Center)
+                        ) {
+                            this@ComposeDialogFragment.Content()
                         }
-                    )
-                    .wrapContentSize()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .clickable(enabled = false) {}
-                        .align(Alignment.Center)
-                ) {
-                    composeActivity.WithTheme {
-                        this@ComposeDialogFragment.Content()
                     }
                 }
             }

@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.welu.composefragments.R
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 
@@ -22,16 +23,22 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
     override fun Content() {
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
                 .fillMaxWidth()
         ) {
             Button(onClick = {
+                navController.navigate(R.id.exampleDialogFragment)
                 //navController.navigate(ExampleBottomSheetDialogFragmentDirections.toExampleDialogFragment())
             }) {
                 Text(text = "Go to dialog 2")
             }
 
             Spacer(modifier = Modifier.height(50.dp))
+
+            Text(text = "Other Text")
+
+            Spacer(modifier = Modifier.height(50.dp))
+
         }
     }
 

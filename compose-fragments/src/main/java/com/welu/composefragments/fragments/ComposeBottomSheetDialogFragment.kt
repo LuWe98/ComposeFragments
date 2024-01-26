@@ -32,7 +32,9 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             composeActivity.WithTheme {
-                this@ComposeBottomSheetDialogFragment.Content()
+                composeActivity.WithBottomSheetDialogFragmentSurface {
+                    this@ComposeBottomSheetDialogFragment.Content()
+                }
             }
         }
     }

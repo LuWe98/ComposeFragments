@@ -16,6 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.welu.composefragments.R
+import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 
 class ExampleFragmentOne : ComposeFragment() {
@@ -31,9 +33,8 @@ class ExampleFragmentOne : ComposeFragment() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onError)
         ) {
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = { navController.navigate(R.id.exampleBottomSheetDialogFragment) }) {
                 Text(text = "Click me")
             }
 

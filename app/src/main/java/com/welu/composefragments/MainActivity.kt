@@ -61,7 +61,7 @@ class MainActivity : ComposeActivity() {
         val useDynamicColors by viewModel.useDynamicColorsFlow.collectAsState()
 
         ComposeFragmentsTheme(
-            darkTheme = useDarkTheme,
+            darkTheme = true,
             dynamicColor = useDynamicColors,
             content = content
         )
