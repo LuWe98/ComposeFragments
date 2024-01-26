@@ -1,5 +1,7 @@
 package com.welu.composefragments.fragments
 
+import android.os.Bundle
+import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +42,11 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
             Spacer(modifier = Modifier.height(50.dp))
 
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        skipHalfExpandedAndCollapsing()
     }
 
     @Preview(showBackground = true)

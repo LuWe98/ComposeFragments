@@ -48,10 +48,6 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
     }
 
     fun skipHalfExpandedAndCollapsing() {
-        bottomSheetBehaviour?.apply {
-            this.state = BottomSheetBehavior.STATE_EXPANDED
-            isFitToContents = false
-        }
         skipCollapsed()
         skipHalfExpanded()
         expand()
