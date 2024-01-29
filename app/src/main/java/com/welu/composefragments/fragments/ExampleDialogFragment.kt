@@ -1,5 +1,7 @@
 package com.welu.composefragments.fragments
 
+import android.os.Bundle
+import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.welu.composefragments.R
+import com.welu.composefragments.extensions.isCurrentDestination
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.result.IntResult
 import com.welu.composefragments.result.sendFragmentResultTo
@@ -52,6 +55,11 @@ class ExampleDialogFragment : ComposeDialogFragment() {
             Spacer(modifier = Modifier.height(20.dp))
 
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController.isCurrentDestination(this::class)
     }
 
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.welu.composefragments.extensions.requireActivity
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -58,7 +59,7 @@ fun ComposeFragmentsTheme(
 
     if (!view.isInEditMode) {
         SideEffect {
-            val window = (view.context as Activity).window
+            val window = view.context.requireActivity().window
             window.statusBarColor = Color.Transparent.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }

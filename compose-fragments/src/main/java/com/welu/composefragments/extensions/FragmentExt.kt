@@ -2,11 +2,12 @@ package com.welu.composefragments.extensions
 
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.welu.composefragments.ComposeActivity
-import kotlin.reflect.KClass
+import com.welu.composefragments.fragments.IComposeFragment
 
 val NavHostFragment.primaryNavigationFragment get(): Fragment = childFragmentManager.primaryNavigationFragment!!
 
@@ -16,13 +17,17 @@ val Fragment.navHostFragment get() : NavHostFragment = requireActivity().navHost
 
 val Fragment.navController get(): NavController = navHostFragment.navController
 
-val Fragment.composeActivity get() : ComposeActivity {
-    val activity = this.requireActivity()
-    return (activity as? ComposeActivity) ?: throw IllegalStateException("The related activity is not a ComposeActivity.")
-}
+fun Fragment.findActivity(): FragmentActivity? = context?.getActivity()
 
 val Fragment.isDialogDestination get() = isDialogFragment || isBottomSheetDialogFragment
 
 val Fragment.isDialogFragment get() = this is DialogFragment
 
 val Fragment.isBottomSheetDialogFragment get() = this is BottomSheetDialogFragment
+
+/**
+ * Tries to find a [ComposeActivity] for this [Fragment].
+ *
+ * An [IComposeFragment] can use the [IComposeFragment.composeActivity] property instead.
+ */
+fun Fragment.findComposeActivity(): ComposeActivity? = findActivity() as? ComposeActivity

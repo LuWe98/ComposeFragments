@@ -1,12 +1,8 @@
 package com.welu.composefragments.fragments
 
-import android.os.Bundle
-import android.view.View
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,10 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.welu.composefragments.R
 import com.welu.composefragments.extensions.navController
+import com.welu.composefragments.navigation.navOptions
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 
 class ExampleFragmentOne : ComposeFragment() {
@@ -29,12 +25,18 @@ class ExampleFragmentOne : ComposeFragment() {
         var currentValue by remember {
             mutableStateOf<Int>(0)
         }
-        
+
+        navOptions {
+            setLaunchSingleTop(true)
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Button(onClick = { navController.navigate(R.id.exampleBottomSheetDialogFragment) }) {
+            Button(onClick = {
+                navController.navigate(R.id.exampleBottomSheetDialogFragment)
+            }) {
                 Text(text = "Click me")
             }
 
@@ -57,12 +59,6 @@ class ExampleFragmentOne : ComposeFragment() {
 //            Text(text = "ParsedValue: $currentValue")
 //        }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
 
     @Preview(showBackground = true)
     @Composable

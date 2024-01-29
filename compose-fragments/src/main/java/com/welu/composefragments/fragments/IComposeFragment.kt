@@ -1,5 +1,12 @@
 package com.welu.composefragments.fragments
 
-import androidx.fragment.app.Fragment
+import androidx.compose.runtime.Composable
+import com.welu.composefragments.ComposeActivity
 
-interface IComposeFragment
+sealed interface IComposeFragment {
+    @Composable
+    fun Content()
+
+    val composeActivity: ComposeActivity
+
+}

@@ -1,6 +1,7 @@
 package com.welu.composefragments.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.welu.composefragments.R
+import com.welu.composefragments.extensions.isCurrentDestination
+import com.welu.composefragments.extensions.isOnBackStack
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 
@@ -47,6 +50,11 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         skipHalfExpandedAndCollapsing()
+
+        val isCurrent = navController.isCurrentDestination(ExampleBottomSheetDialogFragment::class)
+        val onBackStack = navController.isOnBackStack(ExampleDialogFragment::class)
+
+        Log.d("Manual", "Is: $onBackStack")
     }
 
     @Preview(showBackground = true)
@@ -57,3 +65,27 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
         }
     }
 }
+
+/*
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val composeActivity = this.composeActivity
+
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            setContent {
+                -> The WindowInsets.current returns the insets of the LocalView.current.
+                -> The insets of a BottomSheetDialogFragment are applied to the decorView of the dialog window.
+                -> In order to fix the WindowInsets, the LocalView has to return the the dialog decorView
+                CompositionLocalProvider(LocalView provides dialog!!.window!!.decorView) {
+                    composeActivity.WithTheme {
+                        composeActivity.WithBottomSheetDialogFragmentSurface {
+
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+ */

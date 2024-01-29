@@ -14,15 +14,22 @@ import androidx.compose.ui.graphics.Color
 abstract class ComposeActivity : AppCompatActivity() {
 
     /**
-     * Implement this function in a way that it applies your composable theme to the parsed [Composable].
-     * This is used by ComposeFragments, in order to apply the correct theme colors.
+     * Implement this function in a way that it applies your material theme to the parsed [Composable].
+     * This is used by IComposeFragments, in order to apply the correct theme colors.
      *
      * Example:
      *
      *     @Composable
-     *     override fun WithTheme(content: @Composable () -> Unit) {
-     *         val useDarkTheme by viewModel.useDarkThemeFlow.collectAsState()
-     *         val useDynamicColors by viewModel.useDynamicColorsFlow.collectAsState()
+     *     override fun WithTheme(
+     *          content: @Composable () -> Unit
+     *     ) {
+     *         val useDarkTheme by viewModel
+     *              .useDarkThemeFlow
+     *              .collectAsStateWithLifecycle()
+     *
+     *         val useDynamicColors by viewModel
+     *              .useDynamicColorsFlow
+     *              .collectAsStateWithLifecycle()
      *
      *         ApplicationSpecificTheme(
      *             darkTheme = useDarkTheme,
@@ -34,9 +41,12 @@ abstract class ComposeActivity : AppCompatActivity() {
     @Composable
     abstract fun WithTheme(content: @Composable () -> Unit)
 
+    open fun provideDialogFragmentTheme(): Int = R.style.Theme_ComposeDialogFragment
+
+    open fun provideBottomSheetDialogFragmentTheme(): Int = R.style.Theme_ComposeBottomSheetFragment
 
     @Composable
-    fun WithFragmentSurface(
+    open fun WithFragmentSurface(
         content: @Composable () -> Unit
     ) {
         Surface(
@@ -49,7 +59,7 @@ abstract class ComposeActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun WithDialogFragmentSurface(
+    open fun WithDialogFragmentSurface(
         content: @Composable () -> Unit
     ) {
         Surface(
@@ -60,7 +70,7 @@ abstract class ComposeActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun WithBottomSheetDialogFragmentSurface(
+    open fun WithBottomSheetDialogFragmentSurface(
         content: @Composable () -> Unit
     ) {
         Surface(
@@ -69,4 +79,5 @@ abstract class ComposeActivity : AppCompatActivity() {
             content = content
         )
     }
+
 }

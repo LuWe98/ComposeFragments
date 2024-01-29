@@ -61,9 +61,13 @@ dependencies {
 
     //Core Android
     implementation("androidx.core:core-ktx:${Versions.androidxCoreVersion}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidxLifecycleVersion}")
     implementation("androidx.appcompat:appcompat:${Versions.androidxAppCompatVersion}")
     implementation("com.google.android.material:material:${Versions.androidxMaterialVersion}")
+
+
+    //Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidxLifecycleVersion}")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:${Versions.androidxLifecycleVersion}")
 
 
     //Compose

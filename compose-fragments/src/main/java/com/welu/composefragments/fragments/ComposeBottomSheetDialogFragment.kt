@@ -6,24 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.FloatRange
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.updateLayoutParams
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.welu.composefragments.R
-import com.welu.composefragments.extensions.composeActivity
+import com.welu.composefragments.ComposeActivity
+import com.welu.composefragments.extensions.findComposeActivity
 
 abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IComposeFragment {
 
-    val bottomSheetDialog get() = dialog as BottomSheetDialog?
+    final override val composeActivity: ComposeActivity
+        get() = findComposeActivity() ?: throw IllegalStateException("ComposeBottomSheetDialogFragment is not hosted in a ComposeActivity.")
 
-    val bottomSheetBehaviour get() = bottomSheetDialog?.behavior
+    val bottomSheetDialog: BottomSheetDialog?  get()= dialog as BottomSheetDialog?
 
-    @Composable
-    abstract fun Content()
+    val bottomSheetBehaviour: BottomSheetBehavior<FrameLayout>? get() = bottomSheetDialog?.behavior
+
+    open fun compositionLocalProviders(): Array<ProvidedValue<*>> = arrayOf(LocalView provides dialog!!.window!!.decorView)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,21 +35,24 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
         savedInstanceState: Bundle?
     ): View {
         val composeActivity = this.composeActivity
+        val providers = compositionLocalProviders()
 
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
-                composeActivity.WithTheme {
-                    composeActivity.WithBottomSheetDialogFragmentSurface {
-                        this@ComposeBottomSheetDialogFragment.Content()
+                CompositionLocalProvider(*providers) {
+                    composeActivity.WithTheme {
+                        composeActivity.WithBottomSheetDialogFragmentSurface {
+                            this@ComposeBottomSheetDialogFragment.Content()
+                        }
                     }
                 }
             }
         }
     }
 
-    override fun getTheme(): Int = R.style.Theme_ComposeBottomSheetFragment
+    override fun getTheme(): Int = composeActivity.provideBottomSheetDialogFragmentTheme()
 
     fun forceFullscreenBottomSheet(){
         view?.updateLayoutParams<FrameLayout.LayoutParams> {
