@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.welu.composefragments.ComposeActivity
+import com.welu.composefragments.composables.LocalFragment
 import com.welu.composefragments.extensions.findComposeActivity
 
 abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IComposeFragment {
@@ -27,7 +28,10 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
 
     val bottomSheetBehaviour: BottomSheetBehavior<FrameLayout>? get() = bottomSheetDialog?.behavior
 
-    open fun compositionLocalProviders(): Array<ProvidedValue<*>> = arrayOf(LocalView provides dialog!!.window!!.decorView)
+    override fun compositionLocalProviders(): Array<ProvidedValue<*>> = arrayOf(
+        LocalView provides dialog!!.window!!.decorView,
+        LocalFragment provides this
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,6 +92,10 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
 
     fun hide() {
         setBottomSheetState(BottomSheetBehavior.STATE_HIDDEN)
+    }
+
+    fun setIsDraggable(isDraggable: Boolean) {
+        bottomSheetBehaviour?.isDraggable = isDraggable
     }
 
     fun addBottomSheetCallBack(callBack: BottomSheetBehavior.BottomSheetCallback) {

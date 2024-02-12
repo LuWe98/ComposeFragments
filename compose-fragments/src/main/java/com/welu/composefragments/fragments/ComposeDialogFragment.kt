@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.DialogFragment
 import com.welu.composefragments.ComposeActivity
+import com.welu.composefragments.composables.LocalFragment
 import com.welu.composefragments.extensions.findComposeActivity
 
 abstract class ComposeDialogFragment : DialogFragment(), IComposeFragment {
@@ -27,7 +28,10 @@ abstract class ComposeDialogFragment : DialogFragment(), IComposeFragment {
     final override val composeActivity: ComposeActivity
         get() = findComposeActivity() ?: throw IllegalStateException("ComposeDialogFragment is not hosted in a ComposeActivity.")
 
-    open fun compositionLocalProviders(): Array<ProvidedValue<*>> = arrayOf(LocalView provides dialog!!.window!!.decorView)
+    override fun compositionLocalProviders(): Array<ProvidedValue<*>> = arrayOf(
+        LocalView provides dialog!!.window!!.decorView,
+        LocalFragment provides this
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
