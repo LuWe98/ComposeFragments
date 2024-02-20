@@ -1,7 +1,5 @@
 package com.welu.composefragments.result
 
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import androidx.annotation.IdRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -18,49 +16,7 @@ import com.welu.composefragments.extensions.collectOnLifecycle
 import com.welu.composefragments.extensions.findBackStackEntry
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.extensions.requireNavController
-import com.welu.composefragments.provider.FragmentManagerProvider
 import kotlinx.coroutines.launch
-
-//------------------------------------------------------------------------------------
-// FragmentManager Listeners
-//------------------------------------------------------------------------------------
-inline fun <reified FragmentResultType : FragmentResult> Fragment.fragmentResultListener(
-    crossinline action: (FragmentResultType) -> Unit
-) {
-    val resultKey = FragmentResult.createResultKey(FragmentResultType::class)
-    fragmentResultListener(resultKey, resultKey, FragmentManagerProvider.NavHost(), action)
-}
-
-inline fun <reified FragmentResultType : FragmentResult> Fragment.fragmentResultListener(
-    fragmentManagerProvider: FragmentManagerProvider,
-    crossinline action: (FragmentResultType) -> Unit
-) {
-    val resultKey = FragmentResult.createResultKey(FragmentResultType::class)
-    fragmentResultListener(resultKey, resultKey, fragmentManagerProvider, action)
-}
-
-inline fun <reified FragmentResultType : FragmentResult> Fragment.fragmentResultListener(
-    resultKey: String,
-    requestKey: String = resultKey,
-    crossinline action: (FragmentResultType) -> Unit
-) {
-    fragmentResultListener(resultKey, requestKey, FragmentManagerProvider.NavHost(), action)
-}
-
-inline fun <reified FragmentResultType : FragmentResult> Fragment.fragmentResultListener(
-    resultKey: String,
-    requestKey: String = resultKey,
-    fragmentManagerProvider: FragmentManagerProvider,
-    crossinline action: (FragmentResultType) -> Unit
-) {
-    fragmentManagerProvider.provide(requireActivity()).setFragmentResultListener(requestKey, this) { _, bundle ->
-        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-            bundle.getParcelable(resultKey, FragmentResultType::class.java)?.let(action)
-        } else {
-            bundle.getParcelable<FragmentResultType>(resultKey)?.let(action)
-        }
-    }
-}
 
 
 //------------------------------------------------------------------------------------

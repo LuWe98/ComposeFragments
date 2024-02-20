@@ -1,4 +1,4 @@
-package com.welu.composefragments.fragments
+package com.welu.composefragments.fragments.screenone
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -7,14 +7,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.welu.composefragments.R
 import com.welu.composefragments.composables.LocalFragment
-import com.welu.composefragments.extensions.navController
+import com.welu.composefragments.fragments.ComposeFragment
 import com.welu.composefragments.navigation.navOptions
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 
@@ -28,7 +27,7 @@ class ExampleFragmentOne : ComposeFragment() {
         val fragment = LocalFragment.current
 
         var currentValue by remember {
-            mutableStateOf<Int>(0)
+            mutableIntStateOf(0)
         }
 
         navOptions {

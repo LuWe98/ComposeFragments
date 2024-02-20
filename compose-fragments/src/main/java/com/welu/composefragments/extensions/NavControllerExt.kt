@@ -1,6 +1,7 @@
 package com.welu.composefragments.extensions
 
 import androidx.annotation.IdRes
+import androidx.collection.valueIterator
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
@@ -35,6 +36,29 @@ fun NavController.findBackStackEntry(route: String): NavBackStackEntry? = try {
 } catch (e: Exception) {
     null
 }
+
+/**
+ * Returns either the topmost [NavBackStackEntry] for a [Fragment] or null, if there is none.
+ */
+fun <T: Fragment> NavController.findBackStackEntry(fragment: T): NavBackStackEntry? = findBackStackEntry(fragment::class)
+
+/**
+ * Returns either the topmost [NavBackStackEntry] for a [Fragment] class or null, if there is none.
+ */
+inline fun <reified T: Fragment> NavController.findBackStackEntry(): NavBackStackEntry? = findBackStackEntry(T::class)
+
+
+/**
+ * Returns either the topmost [NavBackStackEntry] for a [Fragment] class or null, if there is none.
+ */
+fun <T: Fragment> NavController.findBackStackEntry(fragment: KClass<T>): NavBackStackEntry? {
+    for(destination in graph.nodes.valueIterator()) {
+        if (destination.getFragmentClassName() != fragment.qualifiedName) continue
+        return findBackStackEntry(destination.id) ?: continue
+    }
+    return null
+}
+
 
 
 /**
@@ -131,6 +155,11 @@ fun NavController.isPreviousDestination(route: String): Boolean = previousDestin
  */
 fun <T : Fragment> NavController.isCurrentDestination(fragment: T): Boolean = isCurrentDestination(fragment::class)
 
+/**
+ * Checks if the given [Fragment] is the topmost [NavDestination]
+ */
+inline fun <reified T : Fragment> NavController.isCurrentDestination(): Boolean = isCurrentDestination(T::class)
+
 
 /**
  * Checks if the given [Fragment] [KClass] is the topmost [NavDestination]
@@ -143,6 +172,10 @@ fun <T : Fragment> NavController.isCurrentDestination(fragmentClass: KClass<T>):
  */
 fun <T : Fragment> NavController.isPreviousDestination(fragment: T): Boolean = isPreviousDestination(fragment::class)
 
+/**
+ * Checks if the given [Fragment] is the previous [NavDestination]
+ */
+inline fun <reified T : Fragment> NavController.isPreviousDestination(): Boolean = isPreviousDestination(T::class)
 
 /**
  * Checks if the given [Fragment] [KClass] is the previous [NavDestination]
@@ -152,50 +185,34 @@ fun <T : Fragment> NavController.isPreviousDestination(fragmentClass: KClass<T>)
 
 /**
  * Returns the topmost [NavBackStackEntry] for a [Fragment].
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
  */
 fun <T: Fragment> NavController.getBackStackEntry(fragment: T): NavBackStackEntry = getBackStackEntry(fragment::class)
 
+/**
+ * Returns the topmost [NavBackStackEntry] for a [Fragment].
+ */
+inline fun <reified T: Fragment> NavController.getBackStackEntry(): NavBackStackEntry = getBackStackEntry(T::class)
 
 /**
  * Returns the topmost [NavBackStackEntry] for a [Fragment] class.
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
  */
-fun <T: Fragment> NavController.getBackStackEntry(fragmentClass: KClass<T>): NavBackStackEntry = getBackStackEntry(route = fragmentClass.qualifiedName!!)
-
-
-/**
- * Returns either the topmost [NavBackStackEntry] for a [Fragment] or null, if there is none.
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
- */
-fun <T: Fragment> NavController.findBackStackEntry(fragment: T): NavBackStackEntry? = findBackStackEntry(fragment::class)
-
-
-/**
- * Returns either the topmost [NavBackStackEntry] for a [Fragment] class or null, if there is none.
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
- */
-fun <T: Fragment> NavController.findBackStackEntry(fragmentClass: KClass<T>): NavBackStackEntry? = findBackStackEntry(fragmentClass.qualifiedName!!)
+fun <T: Fragment> NavController.getBackStackEntry(fragmentClass: KClass<T>): NavBackStackEntry = findBackStackEntry(fragmentClass)!!
 
 
 /**
  * Checks if the given [Fragment] is on the [NavController] backstack.
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
  */
 fun <T: Fragment> NavController.isOnBackStack(fragment: T): Boolean = isOnBackStack(fragment::class)
 
+/**
+ * Checks if the given [Fragment] is on the [NavController] backstack.
+ */
+inline fun <reified T: Fragment> NavController.isOnBackStack(): Boolean = isOnBackStack(T::class)
 
 /**
  * Checks if the given [Fragment] class is on the [NavController] backstack.
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
  */
-fun <T: Fragment> NavController.isOnBackStack(fragmentClass: KClass<T>): Boolean = isOnBackStack(fragmentClass.qualifiedName!!)
+fun <T: Fragment> NavController.isOnBackStack(fragmentClass: KClass<T>): Boolean = findBackStackEntry(fragmentClass) != null
 
 
 
@@ -237,7 +254,6 @@ fun NavController.navigateIfNew(
     navigate(directions, optionsBuilder)
 }
 
-
 /**
  * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationFragmentClassName] is equal to the expected [expectedCurrentFragment].
  */
@@ -247,7 +263,17 @@ fun <T: Fragment> NavController.navigateIfNew(
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
     if (!isCurrentDestination(expectedCurrentFragment)) return
+    navigate(directions, optionsBuilder)
+}
 
+/**
+ * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationFragmentClassName] is equal to the expected [expectedCurrentFragment].
+ */
+inline fun <reified T: Fragment> NavController.navigateIfNew(
+    directions: NavDirections,
+    noinline optionsBuilder: NavOptions.Builder.() -> Unit = {}
+) {
+    if (!isCurrentDestination(T::class)) return
     navigate(directions, optionsBuilder)
 }
 
@@ -288,8 +314,6 @@ fun NavController.navigateAndPopUpTo(
 
 /**
  * Navigate with the given [NavDirections] and pops the the backstack to the given [popUpToFragment].
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
  */
 fun <T: Fragment> NavController.navigateAndPopUpTo(
     directions: NavDirections,
@@ -298,10 +322,30 @@ fun <T: Fragment> NavController.navigateAndPopUpTo(
     saveState: Boolean = false,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
+    val backStackEntry = findBackStackEntry(popUpToFragment) ?: return
+
     navigate(directions){
         apply(optionsBuilder)
-        setPopUpTo(popUpToFragment.qualifiedName!!, inclusive, saveState)
+        setPopUpTo(backStackEntry.destination.id, inclusive, saveState)
     }
+}
+
+/**
+ * See [navigateAndPopUpTo] with popUpToFragment.
+ */
+inline fun <reified T: Fragment> NavController.navigateAndPopUpTo(
+    directions: NavDirections,
+    inclusive: Boolean = true,
+    saveState: Boolean = false,
+    noinline optionsBuilder: NavOptions.Builder.() -> Unit = {}
+) {
+    navigateAndPopUpTo(
+        directions = directions,
+        popUpToFragment = T::class,
+        inclusive = inclusive,
+        saveState = saveState,
+        optionsBuilder = optionsBuilder
+    )
 }
 
 
@@ -350,11 +394,8 @@ fun NavController.navigateIfNewAndPopUpTo(
     )
 }
 
-
 /**
  * Combination of [navigateIfNew] and [navigateAndPopUpTo].
- *
- * Only works if the route of each [NavDestination] is equal to the fully qualified name of the corresponding [Fragment].
  */
 fun <T: Fragment> NavController.navigateIfNewAndPopUpTo(
     directions: NavDirections,
@@ -372,5 +413,25 @@ fun <T: Fragment> NavController.navigateIfNewAndPopUpTo(
         inclusive,
         saveState,
         optionsBuilder
+    )
+}
+
+/**
+ * Combination of [navigateIfNew] and [navigateAndPopUpTo].
+ */
+inline fun <reified T: Fragment> NavController.navigateIfNewAndPopUpTo(
+    directions: NavDirections,
+    @IdRes popToDestination: Int,
+    inclusive: Boolean = true,
+    saveState: Boolean = false,
+    noinline optionsBuilder: NavOptions.Builder.() -> Unit = {}
+) {
+    navigateIfNewAndPopUpTo(
+        directions = directions,
+        expectedCurrentFragment = T::class,
+        popToDestination = popToDestination,
+        inclusive = inclusive,
+        saveState = saveState,
+        optionsBuilder = optionsBuilder
     )
 }

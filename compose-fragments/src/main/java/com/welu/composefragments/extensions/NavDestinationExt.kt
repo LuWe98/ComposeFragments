@@ -11,6 +11,10 @@ import kotlin.reflect.KClass
  */
 fun <T: Fragment> NavDestination?.isDestinationOf(fragment: Fragment): Boolean = isDestinationOf(fragment::class)
 
+/**
+ * Checks if the given [Fragment] is connected to a [NavDestination].
+ */
+inline fun <reified T: Fragment> NavDestination?.isDestinationOf(): Boolean = isDestinationOf(T::class)
 
 /**
  * Checks if the given [Fragment] class is connected to a [NavDestination].

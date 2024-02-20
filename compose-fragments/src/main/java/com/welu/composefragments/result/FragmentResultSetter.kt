@@ -1,119 +1,116 @@
 package com.welu.composefragments.result
 
-import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.welu.composefragments.extensions.navController
-import com.welu.composefragments.provider.FragmentManagerProvider
 import com.welu.composefragments.provider.NavBackStackEntryProvider
-
-//------------------------------------------------------------------------------------
-// FragmentManager Setters
-//------------------------------------------------------------------------------------
-
-fun Fragment.setFragmentResult(
-    result: FragmentResult,
-    resultKey: String = FragmentResult.createResultKey(result::class),
-    requestKey: String = resultKey,
-    fragmentManagerProvider: FragmentManagerProvider = FragmentManagerProvider.NavHost()
-) {
-    requireActivity().setFragmentResult(result, resultKey, requestKey, fragmentManagerProvider)
-}
-
-fun Fragment.setFragmentResult(
-    result: FragmentResult,
-    provider: FragmentManagerProvider
-) {
-    val resultKey: String = FragmentResult.createResultKey(result::class)
-    requireActivity().setFragmentResult(result, resultKey, resultKey, provider)
-}
-
-fun FragmentActivity.setFragmentResult(
-    result: FragmentResult,
-    resultKey: String = FragmentResult.createResultKey(result::class),
-    requestKey: String = resultKey,
-    provider: FragmentManagerProvider = FragmentManagerProvider.NavHost()
-) {
-    provider.provide(this).setFragmentResult(result, requestKey, resultKey)
-}
-
-/**
- * Blob LOL
- */
-fun FragmentManager.setFragmentResult(
-    result: FragmentResult,
-    resultKey: String = FragmentResult.createResultKey(result::class),
-    requestKey: String = resultKey
-) {
-    setFragmentResult(requestKey, Bundle().apply {
-        putParcelable(resultKey, result)
-    })
-}
-
+import kotlin.reflect.KClass
 
 
 //------------------------------------------------------------------------------------
 // NavBackStackEntry - Fragment - Setters
 //------------------------------------------------------------------------------------
-fun Fragment.sendFragmentResult(
+fun Fragment.setFragmentResult(
     result: FragmentResult
 ) {
-    sendFragmentResult(
+    setFragmentResult(
         key = FragmentResult.createResultKey(result::class),
         result = result
     )
 }
 
-fun Fragment.sendFragmentResult(
+fun Fragment.setFragmentResult(
     key: String,
     result: FragmentResult
 ) {
-    sendFragmentResultTo(
+    setFragmentResultTo(
         key = key,
         result = result,
-        provider = NavBackStackEntryProvider.previous
+        provider = NavBackStackEntryProvider.Previous
     )
 }
 
-fun Fragment.sendFragmentResultTo(
+fun Fragment.setFragmentResultTo(
     result: FragmentResult,
     @IdRes forDestinationId: Int
 ) {
-    sendFragmentResultTo(
+    setFragmentResultTo(
         key = FragmentResult.createResultKey(result::class),
         result = result,
         forDestinationId = forDestinationId
     )
 }
 
-fun Fragment.sendFragmentResultTo(
+fun Fragment.setFragmentResultTo(
     key: String,
     result: FragmentResult,
     @IdRes forDestinationId: Int
 ) {
-    sendFragmentResultTo(
+    setFragmentResultTo(
         key = key,
         result = result,
-        provider = NavBackStackEntryProvider.id(forDestinationId)
+        provider = NavBackStackEntryProvider.Id(forDestinationId)
     )
 }
 
-fun Fragment.sendFragmentResultTo(
+fun <T: Fragment> Fragment.setFragmentResultTo(
+    result: FragmentResult,
+    forFragment: KClass<T>
+) {
+    setFragmentResultTo(
+        key = FragmentResult.createResultKey(result::class),
+        result = result,
+        forFragment = forFragment
+    )
+}
+
+fun <T: Fragment> Fragment.setFragmentResultTo(
+    key: String,
+    result: FragmentResult,
+    forFragment: KClass<T>
+) {
+    setFragmentResultTo(
+        key = key,
+        result = result,
+        provider = NavBackStackEntryProvider.Class(forFragment)
+    )
+}
+
+inline fun <reified T: Fragment> Fragment.setFragmentResultTo(
+    result: FragmentResult
+) {
+    setFragmentResultTo(
+        result = result,
+        forFragment = T::class
+    )
+}
+
+inline fun <reified T: Fragment> Fragment.setFragmentResultTo(
+    key: String,
+    result: FragmentResult
+) {
+    setFragmentResultTo(
+        key = key,
+        result = result,
+        forFragment = T::class
+    )
+}
+
+
+fun Fragment.setFragmentResultTo(
     result: FragmentResult,
     provider: NavBackStackEntryProvider
 ) {
-    sendFragmentResultTo(
+    setFragmentResultTo(
         key = FragmentResult.createResultKey(result::class),
         result = result,
         provider = provider
     )
 }
 
-fun Fragment.sendFragmentResultTo(
+fun Fragment.setFragmentResultTo(
     key: String,
     result: FragmentResult,
     provider: NavBackStackEntryProvider
@@ -141,48 +138,92 @@ fun NavController.setFragmentResult(
     key: String,
     result: FragmentResult
 ) {
-    setFragmentResult(
+    setFragmentResultTo(
         key = key,
         result = result,
-        provider = NavBackStackEntryProvider.previous
+        provider = NavBackStackEntryProvider.Previous
     )
 }
 
-fun NavController.setFragmentResult(
+fun NavController.setFragmentResultTo(
     result: FragmentResult,
     @IdRes forDestinationId: Int
 ) {
-    setFragmentResult(
+    setFragmentResultTo(
         key = FragmentResult.createResultKey(result::class),
         result = result,
         forDestinationId = forDestinationId
     )
 }
 
-fun NavController.setFragmentResult(
+fun NavController.setFragmentResultTo(
     key: String,
     result: FragmentResult,
     @IdRes forDestinationId: Int
 ) {
-    setFragmentResult(
+    setFragmentResultTo(
         key = key,
         result = result,
-        provider = NavBackStackEntryProvider.id(forDestinationId)
+        provider = NavBackStackEntryProvider.Id(forDestinationId)
     )
 }
 
-fun NavController.setFragmentResult(
+fun <T: Fragment> NavController.setFragmentResultTo(
+    result: FragmentResult,
+    forFragment: KClass<T>
+) {
+    setFragmentResultTo(
+        key = FragmentResult.createResultKey(result::class),
+        result = result,
+        forFragment = forFragment
+    )
+}
+
+fun <T: Fragment> NavController.setFragmentResultTo(
+    key: String,
+    result: FragmentResult,
+    forFragment: KClass<T>
+) {
+    setFragmentResultTo(
+        key = key,
+        result = result,
+        provider = NavBackStackEntryProvider.Class(forFragment)
+    )
+}
+
+inline fun <reified T: Fragment> NavController.setFragmentResultTo(
+    result: FragmentResult
+) {
+    setFragmentResultTo(
+        result = result,
+        forFragment = T::class
+    )
+}
+
+inline fun <reified T: Fragment> NavController.setFragmentResultTo(
+    key: String,
+    result: FragmentResult
+) {
+    setFragmentResultTo(
+        key = key,
+        result = result,
+        forFragment = T::class
+    )
+}
+
+
+fun NavController.setFragmentResultTo(
     result: FragmentResult,
     provider: NavBackStackEntryProvider
 ) {
-    setFragmentResult(
+    setFragmentResultTo(
         key = FragmentResult.createResultKey(result::class),
         result = result,
         provider = provider
     )
 }
 
-fun NavController.setFragmentResult(
+fun NavController.setFragmentResultTo(
     key: String,
     result: FragmentResult,
     provider: NavBackStackEntryProvider

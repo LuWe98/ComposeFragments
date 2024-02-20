@@ -6,7 +6,7 @@
         tools:ignore="InvalidNavigation">
     <fragment
             android:id="@+id/exampleFragmentOne"
-            android:name="com.welu.composefragments.fragments.ExampleFragmentOne"
+            android:name="com.welu.composefragments.fragments.screenone.ExampleFragmentOne"
             android:label="ExampleFragmentOne">
         <action
                 android:id="@+id/to_exampleBottomSheetDialogFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <dialog
             android:id="@+id/exampleBottomSheetDialogFragment"
-            android:name="com.welu.composefragments.fragments.ExampleBottomSheetDialogFragment"
+            android:name="com.welu.composefragments.fragments.dialogone.ExampleBottomSheetDialogFragment"
             android:label="ExampleBottomSheetDialogFragment" >
         <action
                 android:id="@+id/to_exampleDialogFragment"
@@ -22,7 +22,7 @@
     </dialog>
     <dialog
             android:id="@+id/exampleDialogFragment"
-            android:name="com.welu.composefragments.fragments.ExampleDialogFragment"
+            android:name="com.welu.composefragments.fragments.dialogtwo.ExampleDialogFragment"
             android:label="ExampleDialogFragment" >
         <action
                 android:id="@+id/to_exampleFragmentTwo"
@@ -30,6 +30,6 @@
     </dialog>
     <fragment
             android:id="@+id/exampleFragmentTwo"
-            android:name="com.welu.composefragments.fragments.ExampleFragmentTwo"
+            android:name="com.welu.composefragments.fragments.screentwo.ExampleFragmentTwo"
             android:label="ExampleFragmentTwo" />
 </navigation>

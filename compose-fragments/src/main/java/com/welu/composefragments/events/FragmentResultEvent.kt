@@ -23,7 +23,7 @@ class FragmentResultEvent(
     ) : this(
         key = key,
         result = result,
-        provider = NavBackStackEntryProvider.previous
+        provider = NavBackStackEntryProvider.Previous
     )
 
     constructor(
@@ -42,7 +42,7 @@ class FragmentResultEvent(
     ) : this(
         key = key,
         result = result,
-        provider = NavBackStackEntryProvider.id(destinationId)
+        provider = NavBackStackEntryProvider.Id(destinationId)
     )
 
     constructor(

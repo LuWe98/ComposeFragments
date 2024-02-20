@@ -1,10 +1,11 @@
-package com.welu.composefragments.fragments
+package com.welu.composefragments.fragments.screentwo
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.welu.composefragments.extensions.navController
+import com.welu.composefragments.fragments.ComposeFragment
 
 class ExampleFragmentTwo: ComposeFragment() {
 

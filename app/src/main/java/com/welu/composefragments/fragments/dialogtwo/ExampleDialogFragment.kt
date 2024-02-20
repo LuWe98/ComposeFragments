@@ -1,4 +1,4 @@
-package com.welu.composefragments.fragments
+package com.welu.composefragments.fragments.dialogtwo
 
 import android.os.Bundle
 import android.view.View
@@ -15,11 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.welu.composefragments.R
 import com.welu.composefragments.extensions.isCurrentDestination
 import com.welu.composefragments.extensions.navController
+import com.welu.composefragments.fragments.ComposeDialogFragment
 import com.welu.composefragments.result.IntResult
-import com.welu.composefragments.result.sendFragmentResultTo
 import com.welu.composefragments.result.setFragmentResult
 
 class ExampleDialogFragment : ComposeDialogFragment() {

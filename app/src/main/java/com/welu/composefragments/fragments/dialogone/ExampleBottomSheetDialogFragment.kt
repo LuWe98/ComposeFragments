@@ -1,4 +1,4 @@
-package com.welu.composefragments.fragments
+package com.welu.composefragments.fragments.dialogone
 
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +20,8 @@ import com.welu.composefragments.R
 import com.welu.composefragments.extensions.isCurrentDestination
 import com.welu.composefragments.extensions.isOnBackStack
 import com.welu.composefragments.extensions.navController
+import com.welu.composefragments.fragments.ComposeBottomSheetDialogFragment
+import com.welu.composefragments.fragments.dialogtwo.ExampleDialogFragment
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 
 class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {

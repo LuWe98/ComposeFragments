@@ -1,4 +1,4 @@
-package com.welu.composefragments.fragments
+package com.welu.composefragments.fragments.screenone
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
