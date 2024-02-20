@@ -53,8 +53,9 @@ inline fun <reified T: Fragment> NavController.findBackStackEntry(): NavBackStac
  */
 fun <T: Fragment> NavController.findBackStackEntry(fragment: KClass<T>): NavBackStackEntry? {
     for(destination in graph.nodes.valueIterator()) {
-        if (destination.getFragmentClassName() != fragment.qualifiedName) continue
-        return findBackStackEntry(destination.id) ?: continue
+        if (destination.getFragmentClassName() == fragment.qualifiedName && fragment.qualifiedName != null){
+            return findBackStackEntry(destination.id)
+        }
     }
     return null
 }
@@ -228,41 +229,39 @@ fun NavController.navigate(
 
 
 /**
- * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationId] is equal to the expected [expectedCurrentDestination].
+ * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationId] is equal to the expected [requiredDestination].
  */
 fun NavController.navigateIfNew(
     directions: NavDirections,
-    @IdRes expectedCurrentDestination: Int,
+    @IdRes requiredDestination: Int,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
-    if (!isCurrentDestination(expectedCurrentDestination)) return
-
+    if (!isCurrentDestination(requiredDestination)) return
     navigate(directions, optionsBuilder)
 }
 
 
 /**
- * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationRoute] is equal to the expected [expectedCurrentRoute].
+ * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationRoute] is equal to the expected [requiredRoute].
  */
 fun NavController.navigateIfNew(
     directions: NavDirections,
-    expectedCurrentRoute: String,
+    requiredRoute: String,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
-    if (!isCurrentDestination(expectedCurrentRoute)) return
-
+    if (!isCurrentDestination(requiredRoute)) return
     navigate(directions, optionsBuilder)
 }
 
 /**
- * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationFragmentClassName] is equal to the expected [expectedCurrentFragment].
+ * Navigate with the given [NavDirections] and [NavOptions.Builder] if the [NavController.currentDestinationFragmentClassName] is equal to the expected [requiredFragment].
  */
 fun <T: Fragment> NavController.navigateIfNew(
     directions: NavDirections,
-    expectedCurrentFragment: KClass<T>,
+    requiredFragment: KClass<T>,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
-    if (!isCurrentDestination(expectedCurrentFragment)) return
+    if (!isCurrentDestination(requiredFragment)) return
     navigate(directions, optionsBuilder)
 }
 
@@ -283,14 +282,14 @@ inline fun <reified T: Fragment> NavController.navigateIfNew(
  */
 fun NavController.navigateAndPopUpTo(
     directions: NavDirections,
-    @IdRes popUpToDestination: Int,
+    @IdRes popToDestination: Int,
     inclusive: Boolean = true,
     saveState: Boolean = false,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
     navigate(directions){
         apply(optionsBuilder)
-        setPopUpTo(popUpToDestination, inclusive, saveState)
+        setPopUpTo(popToDestination, inclusive, saveState)
     }
 }
 
@@ -354,20 +353,20 @@ inline fun <reified T: Fragment> NavController.navigateAndPopUpTo(
  */
 fun NavController.navigateIfNewAndPopUpTo(
     directions: NavDirections,
-    @IdRes expectedCurrentDestination: Int,
-    @IdRes popToDestination: Int,
+    @IdRes requiredDestination: Int,
+    @IdRes popUpToDestination: Int,
     inclusive: Boolean = true,
     saveState: Boolean = false,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
-    if (!isCurrentDestination(expectedCurrentDestination)) return
+    if (!isCurrentDestination(requiredDestination)) return
 
     navigateAndPopUpTo(
-        directions,
-        popToDestination,
-        inclusive,
-        saveState,
-        optionsBuilder
+        directions = directions,
+        popToDestination = popUpToDestination,
+        inclusive = inclusive,
+        saveState = saveState,
+        optionsBuilder = optionsBuilder
     )
 }
 
@@ -377,20 +376,20 @@ fun NavController.navigateIfNewAndPopUpTo(
  */
 fun NavController.navigateIfNewAndPopUpTo(
     directions: NavDirections,
-    expectedCurrentRoute: String,
-    @IdRes popToDestination: Int,
+    requiredRoute: String,
+    @IdRes popUpToDestination: Int,
     inclusive: Boolean = true,
     saveState: Boolean = false,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
-    if (!isCurrentDestination(expectedCurrentRoute)) return
+    if (!isCurrentDestination(requiredRoute)) return
 
     navigateAndPopUpTo(
-        directions,
-        popToDestination,
-        inclusive,
-        saveState,
-        optionsBuilder
+        directions = directions,
+        popToDestination = popUpToDestination,
+        inclusive = inclusive,
+        saveState = saveState,
+        optionsBuilder = optionsBuilder
     )
 }
 
@@ -399,20 +398,20 @@ fun NavController.navigateIfNewAndPopUpTo(
  */
 fun <T: Fragment> NavController.navigateIfNewAndPopUpTo(
     directions: NavDirections,
-    expectedCurrentFragment: KClass<T>,
-    @IdRes popToDestination: Int,
+    requiredFragment: KClass<T>,
+    @IdRes popUpToDestination: Int,
     inclusive: Boolean = true,
     saveState: Boolean = false,
     optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
-    if (!isCurrentDestination(expectedCurrentFragment)) return
+    if (!isCurrentDestination(requiredFragment)) return
 
     navigateAndPopUpTo(
-        directions,
-        popToDestination,
-        inclusive,
-        saveState,
-        optionsBuilder
+        directions = directions,
+        popToDestination = popUpToDestination,
+        inclusive = inclusive,
+        saveState = saveState,
+        optionsBuilder = optionsBuilder
     )
 }
 
@@ -421,15 +420,15 @@ fun <T: Fragment> NavController.navigateIfNewAndPopUpTo(
  */
 inline fun <reified T: Fragment> NavController.navigateIfNewAndPopUpTo(
     directions: NavDirections,
-    @IdRes popToDestination: Int,
+    @IdRes popUpToDestination: Int,
     inclusive: Boolean = true,
     saveState: Boolean = false,
     noinline optionsBuilder: NavOptions.Builder.() -> Unit = {}
 ) {
     navigateIfNewAndPopUpTo(
         directions = directions,
-        expectedCurrentFragment = T::class,
-        popToDestination = popToDestination,
+        requiredFragment = T::class,
+        popUpToDestination = popUpToDestination,
         inclusive = inclusive,
         saveState = saveState,
         optionsBuilder = optionsBuilder

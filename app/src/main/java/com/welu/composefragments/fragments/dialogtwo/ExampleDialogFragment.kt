@@ -18,8 +18,9 @@ import androidx.compose.ui.unit.dp
 import com.welu.composefragments.extensions.isCurrentDestination
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.fragments.ComposeDialogFragment
+import com.welu.composefragments.fragments.screentwo.ExampleFragmentTwo
 import com.welu.composefragments.result.IntResult
-import com.welu.composefragments.result.setFragmentResult
+import com.welu.composefragments.result.sendFragmentResult
 
 class ExampleDialogFragment : ComposeDialogFragment() {
 
@@ -40,8 +41,8 @@ class ExampleDialogFragment : ComposeDialogFragment() {
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(onClick = {
-                setFragmentResult(IntResult(2))
-
+                sendFragmentResult<ExampleFragmentTwo>(IntResult(2))
+                //sendFragmentResult(IntResult(2))
                 //sendFragmentResultTo(IntResult(2), R.id.exampleFragmentOne)
             }) {
                 Text(text = "Send Result")

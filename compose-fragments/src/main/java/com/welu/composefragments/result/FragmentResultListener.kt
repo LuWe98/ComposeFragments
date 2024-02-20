@@ -23,44 +23,52 @@ import kotlinx.coroutines.launch
 // NavBackStackEntry Listeners
 //------------------------------------------------------------------------------------
 inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
+    onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline callback: (T) -> Unit
 ) {
     viewLifecycleOwner.fragmentResultCollector(
         key = FragmentResult.createResultKey(T::class),
         forNavBackStackEntry = navController.currentBackStackEntry ?: return,
+        onLifeCycleState = onLifeCycleState,
         callback = callback
     )
 }
 
 inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
     key: String,
+    onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline callback: (T) -> Unit
 ) {
     viewLifecycleOwner.fragmentResultCollector(
         key = key,
         forNavBackStackEntry = navController.currentBackStackEntry ?: return,
+        onLifeCycleState = onLifeCycleState,
         callback = callback
     )
 }
 
 inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
     forNavBackStackEntry: NavBackStackEntry,
+    onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline callback: (T) -> Unit
 ) {
     viewLifecycleOwner.fragmentResultCollector(
         key = FragmentResult.createResultKey(T::class),
         forNavBackStackEntry = forNavBackStackEntry,
+        onLifeCycleState = onLifeCycleState,
         callback = callback
     )
 }
 
 inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
     @IdRes destinationId: Int,
+    onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline callback: (T) -> Unit
 ) {
     viewLifecycleOwner.fragmentResultCollector(
         key = FragmentResult.createResultKey(T::class),
         forNavBackStackEntry = navController.getBackStackEntry(destinationId),
+        onLifeCycleState = onLifeCycleState,
         callback = callback
     )
 }
@@ -68,11 +76,13 @@ inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
 inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
     key: String,
     @IdRes destinationId: Int,
+    onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline callback: (T) -> Unit
 ) {
     viewLifecycleOwner.fragmentResultCollector(
         key = key,
         forNavBackStackEntry = navController.getBackStackEntry(destinationId),
+        onLifeCycleState = onLifeCycleState,
         callback = callback
     )
 }
@@ -83,12 +93,13 @@ inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
 inline fun <reified T : FragmentResult> LifecycleOwner.fragmentResultCollector(
     key: String,
     forNavBackStackEntry: NavBackStackEntry,
+    onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline callback: (T) -> Unit
 ) {
     forNavBackStackEntry
         .savedStateHandle
         .getStateFlow<T?>(key, null)
-        .collectOnLifecycle(this, Lifecycle.State.STARTED) { value ->
+        .collectOnLifecycle(this, onLifeCycleState) { value ->
             if (value == null) return@collectOnLifecycle
             callback(value)
             forNavBackStackEntry.savedStateHandle[key] = null

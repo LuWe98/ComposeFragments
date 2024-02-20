@@ -19,7 +19,9 @@ inline fun <reified T: Fragment> NavDestination?.isDestinationOf(): Boolean = is
 /**
  * Checks if the given [Fragment] class is connected to a [NavDestination].
  */
-fun <T: Fragment> NavDestination?.isDestinationOf(fragmentClass: KClass<T>): Boolean = getFragmentClassName() == fragmentClass.qualifiedName!!
+fun <T: Fragment> NavDestination?.isDestinationOf(fragmentClass: KClass<T>): Boolean = fragmentClass.qualifiedName?.let {
+    it == getFragmentClassName()
+} ?: false
 
 
 /**
