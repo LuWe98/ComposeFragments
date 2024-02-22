@@ -1,13 +1,20 @@
 package com.welu.composefragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.welu.composefragments.databinding.ActivityLayoutBinding
+import com.welu.composefragments.events.base.DispatchableEvent
+import com.welu.composefragments.events.base.DispatchableEventBatch
+import com.welu.composefragments.events.base.EventDispatcher
+import com.welu.composefragments.events.navigation.NavigationEvent
+import com.welu.composefragments.extensions.collectOnStarted
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 
@@ -18,8 +25,12 @@ class MainActivity : ComposeActivity() {
     val viewModel by viewModels<MainViewModel>()
     lateinit var binding: ActivityLayoutBinding
 
-    private val activityEventDispatcher = ActivityEventDispatcher()
-    private val fragmentResultEventDispatcher = FragmentResultEventDispatcher(activityEventDispatcher)
+    val activityEventDispatcher: EventDispatcher<DispatchableEvent> = ActivityEventDispatcher(lifecycleScope)
+
+    val fragmentResultEventDispatcher = FragmentResultEventDispatcher(
+        activityEventDispatcher,
+        lifecycleScope
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +39,19 @@ class MainActivity : ComposeActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
         initView()
+
+        activityEventDispatcher.events.collectOnStarted(this) {
+            executeEvent(it)
+        }
+    }
+
+    private fun executeEvent(event: DispatchableEvent) {
+        Log.d("manual", "[EVENT]: $event")
+
+        when(event) {
+            is NavigationEvent -> event.execute(this)
+            is DispatchableEventBatch -> event.events.forEach(::executeEvent)
+        }
     }
 
     private fun initView() {

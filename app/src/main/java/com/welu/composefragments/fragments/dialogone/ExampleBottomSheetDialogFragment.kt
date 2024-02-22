@@ -16,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.welu.composefragments.MainActivity
 import com.welu.composefragments.R
 import com.welu.composefragments.extensions.isCurrentDestination
 import com.welu.composefragments.extensions.isOnBackStack
@@ -23,8 +26,12 @@ import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.fragments.ComposeBottomSheetDialogFragment
 import com.welu.composefragments.fragments.dialogtwo.ExampleDialogFragment
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
+
+    private val viewModel by viewModels<ExampleBottomSheetDialogViewModel>()
 
     @Composable
     override fun Content() {
@@ -34,7 +41,14 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
                 .fillMaxWidth()
         ) {
             Button(onClick = {
-                navController.navigate(R.id.exampleDialogFragment)
+//                lifecycleScope.launch {
+//                    viewModel.onButtonClickedTest()
+//                    delay(1000)
+//                    navController.popBackStack(R.id.exampleBottomSheetDialogFragment, true)
+//                }
+
+                viewModel.onButtonClicked((composeActivity as MainActivity).activityEventDispatcher)
+                //navController.navigate(R.id.exampleDialogFragment)
                 //navController.navigate(ExampleBottomSheetDialogFragmentDirections.toExampleDialogFragment())
             }) {
                 Text(text = "Go to dialog 2")

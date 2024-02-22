@@ -25,6 +25,8 @@ val Fragment.isDialogFragment get() = this is DialogFragment
 
 val Fragment.isBottomSheetDialogFragment get() = this is BottomSheetDialogFragment
 
+val Fragment.isOnBackStack get() = navController.isOnBackStack(this::class)
+
 /**
  * Tries to find a [ComposeActivity] for this [Fragment].
  *

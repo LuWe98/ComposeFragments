@@ -1,4 +1,4 @@
-package com.welu.composefragments.events
+package com.welu.composefragments.events.base
 
 /**
  * This is an marker interface, which marks events that can be dispatched to an [EventDispatcher].

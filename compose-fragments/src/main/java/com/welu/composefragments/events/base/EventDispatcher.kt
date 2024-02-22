@@ -1,9 +1,7 @@
-package com.welu.composefragments.events
+package com.welu.composefragments.events.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -16,9 +14,6 @@ interface EventDispatcher<T: DispatchableEvent> {
      */
     val events: Flow<T>
 
-
-    suspend fun getEvents(): List<T> = events.toList()
-
     /**
      * Processes the parsed [DispatchableEvent]s in a [CoroutineContext] of the caller.
      */
@@ -30,25 +25,26 @@ interface EventDispatcher<T: DispatchableEvent> {
      * This can be useful if navigationEvents are dispatched from a [ViewModel] where the viewModelScope could be destroyed while
      * processing the [DispatchableEvent]s
      */
-    fun autonomousDispatch(vararg events: T)
+    fun delegatingDispatch(vararg events: T)
+
 }
 
 /**
- * See [EventDispatcher.dispatch]
+ * Similar to the regular [dispatch] but this function will wrap the parsed [events] in a [DispatchableEventBatch].
+ *
+ * Therefore, only the [DispatchableEventBatch] will be send as an event to the [EventDispatcher].
+ *
+ * This behaviour is useful if the processing of one [DispatchableEvent] influences the processing of another [DispatchableEvent], or to avoid race conditions.
  */
-suspend inline fun <reified T: DispatchableEvent> EventDispatcher<T>.dispatch(
-    vararg eventProviders: DispatchableEventProvider<T>
+suspend fun EventDispatcher<DispatchableEvent>.batchDispatch(
+    vararg events: DispatchableEvent
 ) {
-    val events = eventProviders.map(DispatchableEventProvider<T>::provide)
-    dispatch(*events.toTypedArray())
+    dispatch(DispatchableEventBatch(*events))
 }
 
 /**
- * See [EventDispatcher.autonomousDispatch]
+ * Combination of [batchDispatch] and [delegatingDispatch].
  */
-inline fun <reified T: DispatchableEvent> EventDispatcher<T>.autonomousDispatch(
-    vararg eventProviders: DispatchableEventProvider<T>
-) {
-    val events = eventProviders.map(DispatchableEventProvider<T>::provide)
-    autonomousDispatch(*events.toTypedArray())
+fun EventDispatcher<DispatchableEvent>.delegatingBatchDispatch(vararg events: DispatchableEvent) {
+    delegatingDispatch(DispatchableEventBatch(*events))
 }

@@ -8,36 +8,9 @@ import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.provider.NavBackStackEntryProvider
 import kotlin.reflect.KClass
 
-
 //------------------------------------------------------------------------------------
 // NavBackStackEntry - Fragment - Setters
 //------------------------------------------------------------------------------------
-/**
- * Sends a [result] to the [NavController.previousBackStackEntry].
- */
-fun Fragment.sendFragmentResultToPrevious(
-    result: FragmentResult
-) {
-    sendFragmentResultToPrevious(
-        key = FragmentResult.createResultKey(result::class),
-        result = result
-    )
-}
-
-/**
- * Sends a [result] for a specified [key] to the [NavController.previousBackStackEntry].
- */
-fun Fragment.sendFragmentResultToPrevious(
-    key: String,
-    result: FragmentResult
-) {
-    sendFragmentResult(
-        key = key,
-        result = result,
-        provider = NavBackStackEntryProvider.Previous
-    )
-}
-
 fun Fragment.sendFragmentResult(
     result: FragmentResult,
     @IdRes toDestination: Int
@@ -131,26 +104,6 @@ fun Fragment.sendFragmentResult(
 //------------------------------------------------------------------------------------
 // NavBackStackEntry - NavController - Setters
 //------------------------------------------------------------------------------------
-fun NavController.sendFragmentResultToPrevious(
-    result: FragmentResult
-) {
-    sendFragmentResultToPrevious(
-        key = FragmentResult.createResultKey(result::class),
-        result = result
-    )
-}
-
-fun NavController.sendFragmentResultToPrevious(
-    key: String,
-    result: FragmentResult
-) {
-    sendFragmentResult(
-        key = key,
-        result = result,
-        provider = NavBackStackEntryProvider.Previous
-    )
-}
-
 fun NavController.sendFragmentResult(
     result: FragmentResult,
     @IdRes toDestination: Int

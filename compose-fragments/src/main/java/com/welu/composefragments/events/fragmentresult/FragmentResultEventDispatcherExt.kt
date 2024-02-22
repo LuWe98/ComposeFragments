@@ -1,49 +1,51 @@
-package com.welu.composefragments.events
+package com.welu.composefragments.events.fragmentresult
 
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import com.welu.composefragments.events.base.EventDispatcher
 import com.welu.composefragments.provider.NavBackStackEntryProvider
 import com.welu.composefragments.result.FragmentResult
+import com.welu.composefragments.result.toEvent
 import kotlin.reflect.KClass
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     result: FragmentResult
-) = dispatch(FragmentResultEvent(result))
+) = dispatch(result.toEvent())
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     key: String,
     result: FragmentResult
-) = dispatch(FragmentResultEvent(key, result))
+) = dispatch(result.toEvent(key))
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     result: FragmentResult,
     @IdRes destinationId: Int
-) = dispatch(FragmentResultEvent(result, destinationId))
+) = dispatch(result.toEvent(destinationId))
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     key: String,
     result: FragmentResult,
     @IdRes destinationId: Int
-) = dispatch(FragmentResultEvent(key, result, destinationId))
+) = dispatch(result.toEvent(key, destinationId))
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     result: FragmentResult,
     fragmentClass: KClass<Fragment>
-) = dispatch(FragmentResultEvent(result, fragmentClass))
+) = dispatch(result.toEvent(fragmentClass))
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     key: String,
     result: FragmentResult,
     fragmentClass: KClass<Fragment>
-) = dispatch(FragmentResultEvent(key, result, fragmentClass))
+) = dispatch(result.toEvent(key, fragmentClass))
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     result: FragmentResult,
     provider: NavBackStackEntryProvider
-) = dispatch(FragmentResultEvent(result, provider))
+) = dispatch(result.toEvent(provider))
 
 suspend fun EventDispatcher<FragmentResultEvent>.dispatch(
     key: String,
     result: FragmentResult,
     provider: NavBackStackEntryProvider
-) = dispatch(FragmentResultEvent(key, result, provider))
+) = dispatch(result.toEvent(key, provider))
