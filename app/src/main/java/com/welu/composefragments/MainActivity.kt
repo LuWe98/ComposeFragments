@@ -15,6 +15,7 @@ import com.welu.composefragments.events.base.DispatchableEventBatch
 import com.welu.composefragments.events.base.EventDispatcher
 import com.welu.composefragments.events.fragmentresult.dispatch
 import com.welu.composefragments.events.navigation.NavigationEvent
+import com.welu.composefragments.events.navigation.dispatch
 import com.welu.composefragments.extensions.collectOnStarted
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.result.IntResult
