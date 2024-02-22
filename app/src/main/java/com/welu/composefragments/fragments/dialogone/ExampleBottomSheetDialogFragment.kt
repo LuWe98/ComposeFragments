@@ -70,7 +70,7 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
         val isCurrent = navController.isCurrentDestination(ExampleBottomSheetDialogFragment::class)
         val onBackStack = navController.isOnBackStack(ExampleDialogFragment::class)
 
-        Log.d("Manual", "Is: $onBackStack")
+        Log.d("Manual", "OnBackstack?: $onBackStack - IsCurrent: $isCurrent")
     }
 
     @Preview(showBackground = true)

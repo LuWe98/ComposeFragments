@@ -27,6 +27,7 @@ fun <T> navEvent(
         parameterOne
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(activity, parameters[0] as T)
     }
 )
@@ -47,6 +48,7 @@ fun <T, T2> navEvent(
         parameterTwo
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -73,6 +75,7 @@ fun <T, T2, T3> navEvent(
         parameterThree
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -101,6 +104,7 @@ fun <T, T2, T3, T4> navEvent(
         parameterFour
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -133,6 +137,7 @@ fun <T, T2, T3, T4, T5> navEvent(
         parameterFive
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -167,6 +172,7 @@ fun <T, T2, T3, T4, T5, T6> navEvent(
         parameterSix
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -204,6 +210,7 @@ fun <T, T2, T3, T4, T5, T6, T7> navEvent(
         parameterSeven
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -244,6 +251,7 @@ fun <T, T2, T3, T4, T5, T6, T7, T8> navEvent(
         parameterEight
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -287,6 +295,7 @@ fun <T, T2, T3, T4, T5, T6, T7, T8, T9> navEvent(
         parameterNine
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,
@@ -334,6 +343,7 @@ fun <T, T2, T3, T4, T5, T6, T7, T8, T9, T10> navEvent(
         parameterTen
     ),
     navAction = { activity, parameters ->
+        @Suppress("UNCHECKED_CAST")
         navAction(
             activity,
             parameters[0] as T,

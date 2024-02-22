@@ -38,22 +38,22 @@ fun NavController.findBackStackEntry(route: String): NavBackStackEntry? = try {
 }
 
 /**
- * Returns either the topmost [NavBackStackEntry] for a [Fragment] or null, if there is none.
- */
-fun <T : Fragment> NavController.findBackStackEntry(fragment: T): NavBackStackEntry? = findBackStackEntry(fragment::class)
-
-/**
  * Returns either the topmost [NavBackStackEntry] for a [Fragment] class or null, if there is none.
  */
 inline fun <reified T : Fragment> NavController.findBackStackEntry(): NavBackStackEntry? = findBackStackEntry(T::class)
 
+/**
+ * Returns either the topmost [NavBackStackEntry] for a [Fragment] or null, if there is none.
+ */
+fun <T : Fragment> NavController.findBackStackEntry(fragment: T): NavBackStackEntry? = findBackStackEntry(fragment::class)
+
 
 /**
  * Returns either the topmost [NavBackStackEntry] for a [Fragment] class or null, if there is none.
  */
-fun <T : Fragment> NavController.findBackStackEntry(fragment: KClass<T>): NavBackStackEntry? {
+fun <T : Fragment> NavController.findBackStackEntry(fragmentClass: KClass<T>): NavBackStackEntry? {
     for (destination in graph.nodes.valueIterator()) {
-        if (destination.getFragmentClassName() == fragment.qualifiedName && fragment.qualifiedName != null) {
+        if (destination.getFragmentClassName() == fragmentClass.qualifiedName && fragmentClass.qualifiedName != null) {
             return findBackStackEntry(destination.id)
         }
     }

@@ -5,7 +5,6 @@ import com.welu.composefragments.events.base.EventDispatcher
 import com.welu.composefragments.events.fragmentresult.FragmentResultEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -26,7 +25,6 @@ class ActivityEventDispatcher(
 
     override fun delegatingDispatch(vararg events: DispatchableEvent) {
         coroutineScope.launch {
-            delay(2000)
             dispatch(*events)
         }
     }

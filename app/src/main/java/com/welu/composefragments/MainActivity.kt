@@ -13,10 +13,14 @@ import com.welu.composefragments.databinding.ActivityLayoutBinding
 import com.welu.composefragments.events.base.DispatchableEvent
 import com.welu.composefragments.events.base.DispatchableEventBatch
 import com.welu.composefragments.events.base.EventDispatcher
+import com.welu.composefragments.events.fragmentresult.dispatch
 import com.welu.composefragments.events.navigation.NavigationEvent
 import com.welu.composefragments.extensions.collectOnStarted
 import com.welu.composefragments.extensions.navController
+import com.welu.composefragments.result.IntResult
+import com.welu.composefragments.result.toEvent
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
+import kotlinx.coroutines.launch
 
 //Testen, ob ein Navigation Event oder Result Event - mit callback funktioniert, wenn bspw. der viewmodel dann destroyed wird.
 //-> Sonst müsste man ein Navigation event erstellen, welches als parameter die Werte nimmt und autonom ist, wie bei der QuizApp
@@ -37,6 +41,12 @@ class MainActivity : ComposeActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
+
+        lifecycleScope.launch {
+            fragmentResultEventDispatcher.dispatch(IntResult(2))
+            activityEventDispatcher.dispatch("", IntResult(3))
+        }
 
         initView()
 
