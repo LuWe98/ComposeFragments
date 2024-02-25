@@ -81,27 +81,3 @@ class ExampleBottomSheetDialogFragment: ComposeBottomSheetDialogFragment() {
         }
     }
 }
-
-/*
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val composeActivity = this.composeActivity
-
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-
-            setContent {
-                -> The WindowInsets.current returns the insets of the LocalView.current.
-                -> The insets of a BottomSheetDialogFragment are applied to the decorView of the dialog window.
-                -> In order to fix the WindowInsets, the LocalView has to return the the dialog decorView
-                CompositionLocalProvider(LocalView provides dialog!!.window!!.decorView) {
-                    composeActivity.WithTheme {
-                        composeActivity.WithBottomSheetDialogFragmentSurface {
-
-                        }
-                    }
-                }
-
-            }
-        }
-    }
- */

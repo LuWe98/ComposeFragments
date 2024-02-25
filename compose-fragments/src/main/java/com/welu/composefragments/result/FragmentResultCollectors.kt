@@ -25,7 +25,7 @@ inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
     onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline resultCollector: (T) -> Unit
 ) {
-    val backStackEntry = navController.findBackStackEntry(this) ?: return
+    val backStackEntry = navController.findBackStackEntry(this) ?: throw IllegalStateException("NavBackStackEntry of Fragment '$this' could not be found.")
 
     viewLifecycleOwner.fragmentResultCollector(
         key = key,
@@ -54,7 +54,7 @@ inline fun <reified T : FragmentResult> Fragment.fragmentResultCollector(
     onLifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline resultCollector: (T) -> Unit
 ) {
-    val backStackEntry = navController.getBackStackEntry(destinationId)
+    val backStackEntry = navController.findBackStackEntry(destinationId) ?: throw IllegalStateException("NavBackStackEntry of this DestinationId could not be found.")
 
     viewLifecycleOwner.fragmentResultCollector(
         key = key,
@@ -88,7 +88,10 @@ inline fun <reified T : FragmentResult> LifecycleOwner.fragmentResultCollector(
     forNavBackStackEntry
         .savedStateHandle
         .getStateFlow<T?>(key, null)
-        .collectOnLifecycle(this, onLifeCycleState) { value ->
+        .collectOnLifecycle(
+            lifecycleOwner = this,
+            onLifeCycleState = onLifeCycleState
+        ) { value: T? ->
             if (value == null) return@collectOnLifecycle
             resultCollector(value)
             forNavBackStackEntry.savedStateHandle[key] = null

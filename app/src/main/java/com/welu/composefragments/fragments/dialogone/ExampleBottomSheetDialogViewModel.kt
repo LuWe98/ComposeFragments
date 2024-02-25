@@ -35,9 +35,10 @@ class ExampleBottomSheetDialogViewModel: ViewModel() {
                 Log.d("manual", "HELLO FROM Navigation Action - $number")
             }
 
-            dispatcher.batchDispatch(event!!, otherEvent!!)
-
-//            dispatcher.dispatch()
+            dispatcher.dispatch(
+                event!!,
+                otherEvent!!
+            )
 
             event = null
             otherEvent = null
