@@ -50,11 +50,12 @@ abstract class ComposeActivity : AppCompatActivity() {
         content: @Composable () -> Unit
     ) {
         Surface(
+            color = MaterialTheme.colorScheme.background,
+            content = content,
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.surface)
                 .fillMaxSize()
-                .statusBarsPadding(),
-            content = content
+                .background(MaterialTheme.colorScheme.background)
+                .statusBarsPadding()
         )
     }
 
@@ -64,7 +65,7 @@ abstract class ComposeActivity : AppCompatActivity() {
     ) {
         Surface(
             color = Color.Transparent,
-            contentColor = contentColorFor(MaterialTheme.colorScheme.surface),
+            contentColor = contentColorFor(MaterialTheme.colorScheme.background),
             content = content
         )
     }
@@ -75,9 +76,8 @@ abstract class ComposeActivity : AppCompatActivity() {
     ) {
         Surface(
             color = Color.Transparent,
-            contentColor = contentColorFor(MaterialTheme.colorScheme.surface),
+            contentColor = contentColorFor(MaterialTheme.colorScheme.background),
             content = content
         )
     }
-
 }

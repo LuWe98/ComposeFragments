@@ -67,9 +67,9 @@ class MainActivity : ComposeActivity() {
 
     private fun initView() {
         binding = ActivityLayoutBinding.inflate(layoutInflater)
-        navController.graph = navController.navInflater.inflate(R.navigation.nav_graph).apply {
-            setStartDestination(R.id.exampleFragmentOne)
-        }
+        //navController.graph = navController.navInflater.inflate(com.welu.composefragments.R.navigation.nav_graph).apply {
+        //    setStartDestination(com.welu.composefragments.R.id.exampleFragmentOne)
+        //}
         setContentView(binding.root)
     }
 
