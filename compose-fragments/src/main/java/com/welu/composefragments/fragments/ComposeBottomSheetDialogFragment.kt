@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.FloatRange
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.platform.ComposeView
@@ -24,7 +25,7 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
     final override val composeActivity: ComposeActivity
         get() = findComposeActivity() ?: throw IllegalStateException("ComposeBottomSheetDialogFragment is not hosted in a ComposeActivity.")
 
-    val bottomSheetDialog: BottomSheetDialog?  get()= dialog as BottomSheetDialog?
+    val bottomSheetDialog: BottomSheetDialog? get()= dialog as BottomSheetDialog?
 
     val bottomSheetBehaviour: BottomSheetBehavior<FrameLayout>? get() = bottomSheetDialog?.behavior
 
@@ -33,12 +34,21 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
         LocalFragment provides this
     )
 
+    @Composable
+    override fun ProvideTheme(content: @Composable () -> Unit){
+        composeActivity.ProvideTheme(content)
+    }
+
+    @Composable
+    override fun ProvideSurface(content: @Composable () -> Unit){
+        composeActivity.ProvideBottomSheetDialogFragmentSurface(content)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val composeActivity = this.composeActivity
         val providers = compositionLocalProviders()
 
         return ComposeView(requireContext()).apply {
@@ -46,8 +56,8 @@ abstract class ComposeBottomSheetDialogFragment: BottomSheetDialogFragment(), IC
 
             setContent {
                 CompositionLocalProvider(*providers) {
-                    composeActivity.WithTheme {
-                        composeActivity.WithBottomSheetDialogFragmentSurface {
+                    ProvideTheme {
+                        ProvideSurface {
                             this@ComposeBottomSheetDialogFragment.Content()
                         }
                     }

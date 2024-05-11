@@ -14,7 +14,7 @@
             android:theme="@style/Theme.ComposeFragments"
             tools:targetApi="31">
         <activity
-                android:name=".MainActivity"
+                android:name="com.welu.composefragments.MainActivity"
                 android:exported="true"
                 android:windowSoftInputMode="adjustResize"
                 android:label="@string/app_name"

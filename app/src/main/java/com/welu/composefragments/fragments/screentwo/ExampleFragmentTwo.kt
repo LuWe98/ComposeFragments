@@ -9,6 +9,8 @@ import com.welu.composefragments.fragments.ComposeFragment
 
 class ExampleFragmentTwo: ComposeFragment() {
 
+    override val applyStatusBarPadding: Boolean = true
+
     @Composable
     override fun Content() {
         Column {
@@ -18,5 +20,4 @@ class ExampleFragmentTwo: ComposeFragment() {
             }
         }
     }
-
 }

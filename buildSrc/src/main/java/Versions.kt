@@ -11,14 +11,14 @@ object Versions {
     const val kotlinVersion = "1.9.10"
     const val androidLibraryVersion = "8.2.2"
 
-    const val androidxCoreVersion = "1.12.0"
-    const val androidxMaterialVersion = "1.11.0"
+    const val androidxCoreVersion = "1.13.1"
+    const val androidxMaterialVersion = "1.12.0"
     const val androidxLifecycleVersion = "2.7.0"
     const val androidxAppCompatVersion = "1.6.1"
 
     const val composeCompilerVersion = "1.5.3"
-    const val composeBomVersion = "2023.08.00"
+    const val composeBomVersion = "2024.05.00"
 
-    const val fragmentVersion = "1.6.2"
-    const val navigationVersion = "2.7.6"
+    const val fragmentVersion = "1.7.0"
+    const val navigationVersion = "2.7.7"
 }

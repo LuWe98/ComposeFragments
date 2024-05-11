@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,15 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import com.welu.composefragments.MainActivity
-import com.welu.composefragments.R
 import com.welu.composefragments.composables.LocalFragment
 import com.welu.composefragments.events.navigation.navEvent
-import com.welu.composefragments.extensions.isOnBackStack
-import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.fragments.ComposeFragment
-import com.welu.composefragments.fragments.dialogtwo.ExampleDialogFragment
 import com.welu.composefragments.navigation.navOptions
 import com.welu.composefragments.result.IntResult
 import com.welu.composefragments.result.fragmentResultCollector
@@ -50,42 +49,23 @@ class ExampleFragmentOne : ComposeFragment() {
                 .fillMaxSize()
         ) {
             Button(onClick = {
-//                Log.d("manual", "Local Fragment: $fragment")
-//
-//                val start = System.currentTimeMillis()
-//                val onBackStack = navController.isOnBackStack<ExampleDialogFragment>()
-//                val end = System.currentTimeMillis() - start
-//
-//                Log.d("manual", "On Backstack: $onBackStack - took: $end")
-//
-//                navController.navigate(R.id.exampleBottomSheetDialogFragment)
-
-                //viewModel.onButtonClicked((composeActivity as MainActivity).activityEventDispatcher)
                 (composeActivity as MainActivity).activityEventDispatcher.delegatingDispatch(navEvent {
-                    navigate(R.id.exampleBottomSheetDialogFragment)
+                    navigate(com.welu.composefragments.example.R.id.exampleFragmentTwo)
                 })
             }) {
-                Text(text = "Click me")
+                Text(text = "To FragmentTwo")
             }
 
+            Spacer(modifier = Modifier.height(20.dp))
 
+            Button(onClick = {
+                (composeActivity as MainActivity).activityEventDispatcher.delegatingDispatch(navEvent {
+                    navigate(com.welu.composefragments.example.R.id.exampleDialogFragment)
+                })
+            }) {
+                Text(text = "To DialogFragment")
+            }
         }
-
-        //val a = R.id.exampleFragmentOne
-
-//        FragmentResultCollector<IntResult>(com.welu.composefragments.R.id.exampleFragmentOne){
-//            currentValue = it.value
-//        }
-//
-//        Column {
-//            Button(onClick = {
-//                navController.navigate(ExampleFragmentOneDirections.toExampleBottomSheetDialogFragment())
-//            }) {
-//                Text(text = "Go to FragmentTwo")
-//            }
-//
-//            Text(text = "ParsedValue: $currentValue")
-//        }
     }
 
 

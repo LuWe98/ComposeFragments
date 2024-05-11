@@ -9,17 +9,15 @@ import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.welu.composefragments.databinding.ActivityLayoutBinding
 import com.welu.composefragments.events.base.DispatchableEvent
 import com.welu.composefragments.events.base.DispatchableEventBatch
 import com.welu.composefragments.events.base.EventDispatcher
 import com.welu.composefragments.events.fragmentresult.dispatch
 import com.welu.composefragments.events.navigation.NavigationEvent
-import com.welu.composefragments.events.navigation.dispatch
+import com.welu.composefragments.example.databinding.ActivityLayoutBinding
 import com.welu.composefragments.extensions.collectOnStarted
 import com.welu.composefragments.extensions.navController
 import com.welu.composefragments.result.IntResult
-import com.welu.composefragments.result.toEvent
 import com.welu.composefragments.ui.theme.ComposeFragmentsTheme
 import kotlinx.coroutines.launch
 
@@ -67,15 +65,15 @@ class MainActivity : ComposeActivity() {
 
     private fun initView() {
         binding = ActivityLayoutBinding.inflate(layoutInflater)
-        //navController.graph = navController.navInflater.inflate(com.welu.composefragments.R.navigation.nav_graph).apply {
-        //    setStartDestination(com.welu.composefragments.R.id.exampleFragmentOne)
-        //}
+        navController.graph = navController.navInflater.inflate(com.welu.composefragments.example.R.navigation.main_nav_graph).apply {
+           setStartDestination(com.welu.composefragments.example.R.id.exampleFragmentOne)
+        }
         setContentView(binding.root)
     }
 
 
     @Composable
-    override fun WithTheme(content: @Composable () -> Unit) {
+    override fun ProvideTheme(content: @Composable () -> Unit) {
         val useDarkTheme by viewModel.useDarkThemeFlow.collectAsStateWithLifecycle()
         val useDynamicColors by viewModel.useDynamicColorsFlow.collectAsStateWithLifecycle()
 

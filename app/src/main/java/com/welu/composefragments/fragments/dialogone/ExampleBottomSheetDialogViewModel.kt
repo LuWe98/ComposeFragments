@@ -31,7 +31,7 @@ class ExampleBottomSheetDialogViewModel: ViewModel() {
             }
 
             var otherEvent: NavigationEvent? = navEvent(23) { _, number ->
-                navigate(R.id.exampleDialogFragment)
+//                navigate(R.id.exampleDialogFragment)
                 Log.d("manual", "HELLO FROM Navigation Action - $number")
             }
 

@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
 import androidx.compose.runtime.remember
@@ -33,12 +34,21 @@ abstract class ComposeDialogFragment : DialogFragment(), IComposeFragment {
         LocalFragment provides this
     )
 
+    @Composable
+    override fun ProvideTheme(content: @Composable () -> Unit){
+        composeActivity.ProvideTheme(content)
+    }
+
+    @Composable
+    override fun ProvideSurface(content: @Composable () -> Unit){
+        composeActivity.ProvideDialogFragmentSurface(content)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val composeActivity = this.composeActivity
         val providers = compositionLocalProviders()
 
         return ComposeView(requireContext()).apply {
@@ -46,17 +56,15 @@ abstract class ComposeDialogFragment : DialogFragment(), IComposeFragment {
 
             setContent {
                 CompositionLocalProvider(*providers) {
-                    composeActivity.WithTheme {
-                        composeActivity.WithDialogFragmentSurface {
+                    ProvideTheme {
+                        ProvideSurface {
                             Box(
                                 modifier = Modifier
                                     .clickable(
                                         indication = null,
                                         interactionSource = remember(::MutableInteractionSource),
                                         onClick = {
-                                            if (isCancellableOnTouchOutside) {
-                                                dismiss()
-                                            }
+                                            if (isCancellableOnTouchOutside) dismiss()
                                         }
                                     )
                                     .wrapContentSize()
@@ -64,7 +72,11 @@ abstract class ComposeDialogFragment : DialogFragment(), IComposeFragment {
                                 Box(
                                     modifier = Modifier
                                         .wrapContentSize()
-                                        .clickable(enabled = false) {}
+                                        .clickable(
+                                            indication = null,
+                                            interactionSource = remember(::MutableInteractionSource),
+                                            onClick = {}
+                                        )
                                         .align(Alignment.Center)
                                 ) {
                                     this@ComposeDialogFragment.Content()

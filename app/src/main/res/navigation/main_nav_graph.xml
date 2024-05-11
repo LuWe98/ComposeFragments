@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_nav_graph"
+        app:startDestination="@id/exampleFragmentOne">
+    <fragment
+            android:id="@+id/exampleFragmentOne"
+            android:name="com.welu.composefragments.fragments.screenone.ExampleFragmentOne"
+            android:label="ExampleFragmentOne" >
+        <action
+                android:id="@+id/action_exampleFragmentOne_to_exampleFragmentTwo2"
+                app:destination="@id/exampleFragmentTwo" />
+        <action
+                android:id="@+id/action_exampleFragmentOne_to_exampleDialogFragment"
+                app:destination="@id/exampleDialogFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/exampleFragmentTwo"
+            android:name="com.welu.composefragments.fragments.screentwo.ExampleFragmentTwo"
+            android:label="ExampleFragmentTwo" >
+        <action
+                android:id="@+id/action_exampleFragmentTwo2_to_exampleDialogFragment"
+                app:destination="@id/exampleDialogFragment" />
+    </fragment>
+    <dialog
+            android:id="@+id/exampleDialogFragment"
+            android:name="com.welu.composefragments.fragments.dialogtwo.ExampleDialogFragment"
+            android:label="ExampleDialogFragment" />
+</navigation>

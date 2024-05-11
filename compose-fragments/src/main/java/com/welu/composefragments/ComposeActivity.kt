@@ -39,14 +39,15 @@ abstract class ComposeActivity : AppCompatActivity() {
      *     }
      */
     @Composable
-    abstract fun WithTheme(content: @Composable () -> Unit)
+    abstract fun ProvideTheme(content: @Composable () -> Unit)
 
     open fun provideDialogFragmentTheme(): Int = R.style.Theme_ComposeDialogFragment
 
     open fun provideBottomSheetDialogFragmentTheme(): Int = R.style.Theme_ComposeBottomSheetFragment
 
     @Composable
-    open fun WithFragmentSurface(
+    open fun ProvideFragmentSurface(
+        applyStatusBarPadding: Boolean,
         content: @Composable () -> Unit
     ) {
         Surface(
@@ -54,13 +55,14 @@ abstract class ComposeActivity : AppCompatActivity() {
             content = content,
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .statusBarsPadding()
+                .background(MaterialTheme.colorScheme.background).let { modifier ->
+                    return@let if (applyStatusBarPadding) modifier.statusBarsPadding() else modifier
+                }
         )
     }
 
     @Composable
-    open fun WithDialogFragmentSurface(
+    open fun ProvideDialogFragmentSurface(
         content: @Composable () -> Unit
     ) {
         Surface(
@@ -71,7 +73,7 @@ abstract class ComposeActivity : AppCompatActivity() {
     }
 
     @Composable
-    open fun WithBottomSheetDialogFragmentSurface(
+    open fun ProvideBottomSheetDialogFragmentSurface(
         content: @Composable () -> Unit
     ) {
         Surface(
